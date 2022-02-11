@@ -21,8 +21,9 @@ class View
      */
     function render($template = 'template') {
         ob_start();
-        // you can access $this->data in template
-        require "Application/Views/".$template.".php";
+        if($this->data != null) extract($this->data); //extraction du tableau $data. Permet d'avoir accès aux variables définies dans les controllers à travers setData dans les templates
+        if(isset($template) and file_exists('Application/Views/'.$template . '.php')) require "Application/Views/".$template.".php";
+        else die("La template $template n'existe pas, il faut vérifier l'appel à la fonction \$this->view->render dans le controller");
         $str = ob_get_contents();
         ob_end_clean();
         return $str;

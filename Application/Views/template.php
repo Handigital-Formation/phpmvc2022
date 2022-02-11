@@ -37,7 +37,7 @@
 <?php
 
 // on cherche la view demandée
-if(file_exists('Application/Views/'.$this->data['view'] . '.php')) include $this->data['view'] . '.php';
+if(isset($view) and file_exists('Application/Views/'.$view . '.php')) include $view . '.php';
 else include 'frontend/not-found.php';
 
 ?>
