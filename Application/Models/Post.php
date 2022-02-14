@@ -13,7 +13,7 @@ abstract class Post
     protected $name;
     protected $category;
 
-    function _construct() {
+    function __construct() {
 
     }
 

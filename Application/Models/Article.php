@@ -5,7 +5,7 @@ namespace Application\Models;
 class Article extends Post
 {
 
-    function _construct() {
+    function __construct() {
 
     }
 
