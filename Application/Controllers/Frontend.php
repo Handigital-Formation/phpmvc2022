@@ -31,6 +31,21 @@ Class Frontend {
         //On doit récupérer les articles depuis la base de données et les initialiser
         //puis les passer à la view
         /***********************************************/
+        $article_repository = new \Application\Models\ArticleRepository(); //on instancie un repository
+        $donnees_articles = $article_repository->all(); //on récupère les données depuis la base de données
+
+        //print_r($donnees_articles);die;
+
+        $articles = [];
+        // boucler sur mon tableau donnees_articles
+        // pour chacun creer un objet article et l'ajouter à mon tableau d'articles
+        foreach($donnees_articles as $donnees_article){
+            $articles[] = new \Application\Models\Article( $donnees_article );
+        }
+
+         $this->view->setData('articles', $articles);
+        //print_r($articles);die;
+        
         $posts = ['un article', 'un autre article']; //ceci devrait être remplacer par des articles récupérés depuis la base de données
         $this->view->setData('posts', $posts);
 

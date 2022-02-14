@@ -3,7 +3,6 @@
 <div class="row medium-8 large-7 columns">
 
     <h2>Titre: <?php echo $page->title(); ?></h2>
-
     <h4>Contenu: </h4>
 
     <?php echo $page->content(); ?>
@@ -17,23 +16,33 @@
     
 <div class="row medium-8 large-7 columns">
 
-    <h3>La liste d'articles devraient apparaitre en dessous sous cette forme : </h3>
+  <h3>La liste d'articles devraient apparaitre en dessous sous cette forme : </h3>
 
-    <hr>
+  <hr>
 
-    <?php
-    
-    //ici, on inclut deux fois un fichier contenant du HTML brut pour l'exemple!
-    //mais il faudra ici réaliser une boucle sur les informations récupérées depuis la base de données (à chaque tour de boucle on inclut une fois le fichier article-accueil.php)
+  <?php
+  
+  //ici, on inclut deux fois un fichier contenant du HTML brut pour l'exemple!
+  //mais il faudra ici réaliser une boucle sur les informations récupérées depuis la base de données (à chaque tour de boucle on inclut une fois le fichier article-accueil.php)
 
-    //Pour récupérer les variables passées dans le contrôleur, et donc les données recupérées depuis la BDD, on utilisera $posts
-    // print_r($posts);
+  //Pour récupérer les variables passées dans le contrôleur, et donc les données recupérées depuis la BDD, on utilisera $posts
 
-    //il faudra modifier le fichier article-acceuil.php pour qu'il utilise les données de la BDD et pas du HTML brut
 
+  foreach($articles as $article){
     include 'article-accueil.php'; 
-    include 'article-accueil.php';
+  }
+  
+  //echo '<p style="color:red">'.$articles[0]->title().'</p>';
+  //print_r($articles[0]->title());
 
-    ?>
+  //il faudra modifier le fichier article-acceuil.php pour qu'il utilise les données de la BDD et pas du HTML brut
+  // foreach ($posts as $article) {
+  //     echo '<h2>'.$article.'</h2>';
+  //     include 'article-accueil.php';
+  // }
+  //include 'article-accueil.php'; 
+  //include 'article-accueil.php';
+
+  ?>
 
 </div>
