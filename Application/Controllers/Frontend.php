@@ -21,20 +21,13 @@ Class Frontend {
 
         $page_accueil = new \Application\Models\Page( $donnees_page_accueil ); //on instancie un objet page (Un modèle) avec les données récupérées par le repository
 
-        //On passe notre objet à la vue. Dans la fichier de la vue, on pourra utiliser la variable $page
+        // //On passe notre objet à la vue. Dans la fichier de la vue, on pourra utiliser la variable $page
         $this->view->setData('page', $page_accueil);
 
 
-        //Autre exemple pour passer des données à la View
-        /***********************************************/
-        //À compléter
-        //On doit récupérer les articles depuis la base de données et les initialiser
-        //puis les passer à la view
-        /***********************************************/
         $article_repository = new \Application\Models\ArticleRepository(); //on instancie un repository
         $donnees_articles = $article_repository->all(); //on récupère les données depuis la base de données
-
-        //print_r($donnees_articles);die;
+        // print_r($donnees_articles);die;
 
         $articles = [];
         // boucler sur mon tableau donnees_articles
@@ -44,19 +37,14 @@ Class Frontend {
         }
 
          $this->view->setData('articles', $articles);
-        //print_r($articles);die;
-        
-        $posts = ['un article', 'un autre article']; //ceci devrait être remplacer par des articles récupérés depuis la base de données
-        $this->view->setData('posts', $posts);
+        // //print_r($articles);die;
 
-        //On donne le nom de la vue que l'on veut appeler
+        // //On donne le nom de la vue que l'on veut appeler
         $this->view->setData('view', 'frontend/accueil');
 
-        
         //on appelle la template, qui va utiliser la view que l'on a choisie
         //La fonction render utilise template.php par défaut, mais on peut lui spécifier une autre template en paramètre
         echo $this->view->render();
-    
     }
 
     /**
@@ -82,15 +70,27 @@ Class Frontend {
      */
     function articles($category = null) {
 
-        /***********************************************/
-        //À compléter
-        //On doit récupérer les articles depuis la base de données et les initialiser
-        //puis les passer à une view
-        /***********************************************/
+      if(isset($_GET['category'])) $category = $_GET['category']; //si param category, on l'utilise
 
+      $article_repository = new \Application\Models\ArticleRepository(); //on instancie un repository
+      $donnees_articles = $article_repository->all($category); //on récupère les données depuis la base de données
 
-        //on appelle la template, qui va utiliser la view que l'on a choisie
-        echo $this->view->render();
+      //On crée les modèles
+      $articles_array = [];
+      foreach($donnees_articles as $donnees_article){
+          $articles_array[] = new \Application\Models\Article( $donnees_article );
+      }
+
+      //on passe les articles à la vue $articles_array deviendra $articles dans la vue
+      $this->view->setData('articles', $articles_array);
+
+      $this->view->setData('title', $category);//on crée une variable $title en view
+      
+      //On donne le nom de la vue que l'on veut appeler
+      $this->view->setData('view', 'articles/list');
+
+      //on appelle la template, qui va utiliser la view que l'on a choisie
+      echo $this->view->render();
     }
 
     /**

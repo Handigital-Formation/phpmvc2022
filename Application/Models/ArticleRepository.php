@@ -33,18 +33,20 @@ class ArticleRepository extends Repository
   {
   }
 
-  function all($categories = array())
+  function all($category = null)
   {
-        $statement = $this->db->prepare('SELECT * FROM posts WHERE post_type="article"');
+    $query = 'SELECT * FROM posts WHERE post_type="article"';
 
-        try {
+    if ($category != null) $query .= ' AND post_category="' . $category . '"';
 
-            $statement->execute();
-        } catch (\PDOException $e) {
-            echo "Statement failed: " . $e->getMessage();
-            return false;
-        }
+    try {
 
-        return $statement->fetchAll();
+      $statement = $this->db->prepare($query);
+      $statement->execute();
+      return $statement->fetchAll();
+    } catch (\PDOException $e) {
+      echo "Statement failed: " . $e->getMessage();
+      return false;
+    }
   }
 }
