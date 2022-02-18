@@ -19,6 +19,8 @@ abstract class Repository
 
       if (DB_DRIVER == 'sqlite') $db = new \PDO('sqlite:' . DB_PATH);
       else $db = new \PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PWD);
+      
+      $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
     } catch (Exception $e) {
       print "Erreur de connexion à la base de données : " . $e->getMessage() . "<br/>";
